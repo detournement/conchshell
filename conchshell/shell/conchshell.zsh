@@ -20,6 +20,9 @@ _conchshell_suggest() {
             return 0
         fi
     fi
+    # Give transient progress and errors their own line, outside the ZLE prompt.
+    zle -I
+    printf '\n'
     if suggestion=$(command conchshell complete --shell zsh -- "$request"); then
         if [[ -n "$suggestion" ]]; then
             BUFFER="$suggestion"

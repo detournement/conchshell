@@ -10,3 +10,4 @@
 - Fix empty-line Zsh shortcuts silently exiting: use Zsh's native minibuffer instead of reading disconnected widget stdin; verify delayed Escape Escape and cancellation in a real PTY.
 - Keep successful Codex suggestions quiet instead of printing advisory diagnostics into the shell prompt; malformed responses, failed turns, and native tool attempts still fail visibly.
 - Add `conchshell model [MODEL]` for saved model selection, an interactive model-ID prompt, and `--show`; add `ask`/`complete --model` (`-m`) for one-off overrides without changing saved settings.
+- Add a stdlib-only animated Thinking indicator with elapsed time and provider/model context; keep captured output clean and clear progress on completion, errors, and cancellation.

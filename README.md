@@ -70,6 +70,8 @@ Options go before the request. Use `--` before a request that starts with a dash
 ask --timeout 30 explain ls --help
 ```
 
+While a request is running, a compact animated **Thinking** line shows elapsed time and the selected provider/model. This is an activity indicator, not a percentage or a claim about the provider's internal reasoning. It clears before the answer or error, including on Ctrl+C. Progress uses terminal stderr only, so captured answers remain clean; redirected stderr and `TERM=dumb` disable it, and `NO_COLOR` disables its colors.
+
 Failed requests leave the current line intact. Multiline commands, terminal controls, incomplete responses, and tool requests are rejected. A model can still suggest an incorrect or destructive command: **review every suggestion**.
 
 ## Sign in

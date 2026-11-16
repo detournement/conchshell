@@ -9,6 +9,8 @@ _conchshell_suggest() {
         printf '\n'
         IFS= read -r -e -p 'ask: ' request || return 0
         [[ -n "$request" ]] || return 0
+    else
+        printf '\n'
     fi
     if suggestion=$(command conchshell complete --shell bash -- "$request"); then
         if [[ -n "$suggestion" ]]; then

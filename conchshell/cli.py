@@ -221,6 +221,7 @@ def _clean_response(text: str, command: bool) -> str:
 
 def _ask(args) -> int:
     from . import native, providers
+    from .progress import Thinking
     words = args.request[1:] if args.request[:1] == ["--"] else args.request
     request = " ".join(words).strip()
     if not request:
@@ -236,15 +237,18 @@ def _ask(args) -> int:
     settings = effective_config()
     provider = settings["provider"]
     model = args.model or settings.get("model") or _defaults()[provider]
-    if provider in native.DEFAULT_MODELS:
-        text = native.complete(provider, model, system, request, args.timeout)
-    else:
-        key = _key(provider)
-        if provider != "ollama" and not key:
-            raise ConchError(f"Sign in first: conchshell auth login {provider}")
-        text = providers.complete(provider, model, system, request, args.timeout,
-                                  api_key=key, base_url=settings.get("base_url", ""))
-    print(_clean_response(text, command))
+    is_native = provider in native.DEFAULT_MODELS
+    key = "" if is_native else _key(provider)
+    if not is_native and provider != "ollama" and not key:
+        raise ConchError(f"Sign in first: conchshell auth login {provider}")
+    with Thinking(provider, model):
+        if is_native:
+            text = native.complete(provider, model, system, request, args.timeout)
+        else:
+            text = providers.complete(provider, model, system, request, args.timeout,
+                                      api_key=key, base_url=settings.get("base_url", ""))
+        text = _clean_response(text, command)
+    print(text)
     return 0
 
 
