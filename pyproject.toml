@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "conchshell"
+version = "0.1.0"
+description = "Small, stdlib-only shell command suggestions and short answers"
+requires-python = ">=3.9"
+readme = "README.md"
+license = {file = "LICENSE"}
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/detournement/conchshell"
+Repository = "https://github.com/detournement/conchshell"
+
+[project.scripts]
+conchshell = "conchshell.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["conchshell*"]
+
+[tool.setuptools.package-data]
+conchshell = ["shell/*.bash", "shell/*.zsh"]
